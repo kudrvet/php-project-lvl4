@@ -14,12 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $user = new \App\Models\User();
-    $user->name = 'admin';
-    $user->email = 'admin@mail.ru';
-    $user->password = '12345';
-    $user->save();
     return view('welcome');
-
-
 });
