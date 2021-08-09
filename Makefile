@@ -27,6 +27,7 @@ test-coverage:
 
 deploy:
 	git push heroku
+	heroku run php /app/artisan migrate
 
 lint:
 	composer run-script phpcs
