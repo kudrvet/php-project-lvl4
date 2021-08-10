@@ -38,5 +38,4 @@ class HomeController extends Controller
 
         return Redirect::route('home');
     }
-
 }
