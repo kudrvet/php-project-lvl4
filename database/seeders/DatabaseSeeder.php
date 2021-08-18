@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\TaskStatus;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        TaskStatus::insert([
+            ['name' => 'новый'],
+            ['name' => 'в работе'],
+            ['name' => 'на тестировании'],
+            ['name' => 'завершен']
+        ]);
+
+        User::factory()->count(5)->create();
     }
 }

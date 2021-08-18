@@ -6,8 +6,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-param" content="_token" />
 
-    <title>{{ 'Менеджер задач' }}</title>
+    <title>@lang('Менеджер задач')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -23,12 +24,16 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('home')  }}">
-                    {{ 'Менеджер задач' }}
+                <a class="navbar-brand" href="{{ route('home')}}">
+                    @lang('Менеджер задач')
                 </a>
-                <a class="nav-item" href="{{ url('/statuses') }}">
-                    {{ 'Статусы' }}
+                <a class="nav-item" href="{{ route('tasks.index')}}">
+                    @lang('Задачи')
                 </a>
+                <a class="nav-item m-sm-2" href="{{ route('task_statuses.index')}}">
+                    @lang('Статусы')
+                </a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -45,13 +50,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">@lang('Вход')</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">@lang('Регистрация')</a>
                                 </li>
                             @endif
                         @else
@@ -64,7 +69,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        @lang('Выход')
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -78,7 +83,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="container py-4">
             @include('flash::message')
             @yield('content')
         </main>

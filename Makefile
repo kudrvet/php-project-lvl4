@@ -37,5 +37,6 @@ lint-fix:
 
 fresh-seed:
 	php artisan migrate:fresh
-	php artisan db:seed --class=DomainSeeder
-	php artisan db:seed --class=DomainChecksSeeder
+	php artisan db:seed --class=DatabaseSeeder
+
+
