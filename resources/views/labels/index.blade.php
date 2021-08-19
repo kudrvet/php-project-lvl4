@@ -1,6 +1,6 @@
 <?php
 use App\Models\Label;
-
+use Illuminate\Support\Str;
 /**
  * @var Label[] $labels
  */
@@ -19,6 +19,7 @@ use App\Models\Label;
             <tr>
                 <th>@lang('ID')</th>
                 <th>@lang('Имя')</th>
+                <th>@lang('Описание')</th>
                 <th>@lang('Дата создания')</th>
                 @auth
                 <th>@lang('Действия')</th>
@@ -30,6 +31,7 @@ use App\Models\Label;
                 <tr>
                     <td>{{$label->id}}</td>
                     <td>{{$label->name}}</td>
+                    <td>{{Str::limit(optional($label)->description ?? '')}}</td>
                     <td>{{$label->created_at}}</td>
                     @auth
                     <td>
