@@ -3,6 +3,11 @@ use App\Models\Task;
 
 /**
  * @var Task[] $tasks
+ * @var array $statusesList
+ * @var array $usersList
+ * @var integer $statusId
+ * @var integer $createdById
+ * @var integer $assignedToId
  */
 ?>
 
@@ -11,8 +16,20 @@ use App\Models\Task;
 @section('content')
     <main class="container py-4">
         <h1 class="mb-5">@lang('Задачи')</h1>
+        <div class="d-flex">
+            <div>
+                {{Form::open(['class' => 'form-inline','method' => 'get'])}}
+                {{Form::select('filter[status_id]', $statusesList , $statusId,  selectAttributes : ['class' => 'form-control mr-2','placeholder' => __('Статус')])}}
+                {{Form::select('filter[created_by_id]', ['' => __('Создатель')] + $usersList, $createdById, selectAttributes : ['class' => 'form-control mr-2'])}}
+                {{Form::select('filter[assigned_to_id]',['' => __('Исполнитель')] + $usersList, $assignedToId, selectAttributes : ['class' => 'form-control mr-2'])}}
+                <input class="btn btn-outline-primary mr-2" type="submit" value="Применить">
+                {{Form::close()}}
+            </div>
+        </div>
+
+
         @auth()
-            <a href="{{route('tasks.create')}}" class="btn btn-primary"> @lang('Создать задачу') </a>
+            <a href="{{route('tasks.create')}}" class="btn btn-primary mt-5"> @lang('Создать задачу') </a>
         @endauth
         <table class="table mt-2">
             <thead>

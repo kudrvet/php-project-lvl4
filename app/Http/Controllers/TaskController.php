@@ -7,7 +7,10 @@ use App\Models\Task;
 use App\Http\Requests\TaskRequest;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\WorkerTimesheet;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class TaskController extends Controller
@@ -22,11 +25,34 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::all();
+//        $tasks = Task::all();
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters(['status_id','created_by_id','assigned_to_id'])
+            ->orderBy('created_at')
+            ->paginate(20);
 
-        return response()->view('tasks.index', compact('tasks'));
+        $filterParams = $request->input('filter');
+
+        $statusId = $filterParams['status_id'] ?? '';
+        $createdById = $filterParams['created_by_id'] ?? '';
+        $assignedToId = $filterParams['assigned_to_id'] ?? '';
+
+        $usersList = User::pluck('name', 'id')->all();
+        $statusesList = TaskStatus::pluck('name', 'id')->all();
+
+        return response()->view(
+            'tasks.index',
+            compact(
+                'tasks',
+                'usersList',
+                'statusesList',
+                'statusId',
+                'createdById',
+                'assignedToId'
+            )
+        );
     }
 
     /**
