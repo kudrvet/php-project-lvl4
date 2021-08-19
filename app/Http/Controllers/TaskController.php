@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Label;
 use App\Models\Task;
 use App\Http\Requests\TaskRequest;
 use App\Models\TaskStatus;
@@ -48,8 +49,10 @@ class TaskController extends Controller
         $task = new Task();
         $statusesList = ['' => 'Выберите статус'] + TaskStatus::pluck('name', 'id')->all();
         $usersList = ['' => 'Выберите исполнителя'] + User::pluck('name', 'id')->all();
+        $labelsList = ['' => 'Добавьте метки'] + Label::pluck('name', 'id')->all();
+
         return response()
-            ->view('tasks.create', compact('task', 'statusesList', 'usersList'));
+            ->view('tasks.create', compact('task', 'statusesList', 'usersList', 'labelsList'));
     }
 
     /**
@@ -61,7 +64,13 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
         $data = $request->input() + ['created_by_id' => \Auth::id()];
-        Task::create($data);
+
+        $labelsIds = array_filter($data['labels']);
+        $labels = Label::whereIn('id', $labelsIds)->get()->all();
+
+        $task = Task::create($data);
+        $task->labels()->saveMany($labels);
+
         flash(__('Задача успешно создана'))->success();
         return redirect()->route('tasks.index');
     }
@@ -77,7 +86,9 @@ class TaskController extends Controller
     {
         $statusesList = ['' => 'Выберите статус'] + TaskStatus::pluck('name', 'id')->all();
         $usersList = ['' => 'Выберите исполнителя'] + User::pluck('name', 'id')->all();
-        return \response()->view('tasks.edit', compact('task', 'statusesList', 'usersList'));
+        $labelsList = ['' => 'Добавьте метки'] + Label::pluck('name', 'id')->all();
+
+        return \response()->view('tasks.edit', compact('task', 'statusesList', 'usersList', 'labelsList'));
     }
 
     /**
@@ -87,8 +98,14 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, Task $task)
     {
-        $task->fill($request->input());
+        $data = $request->input();
+        $task->fill($data);
         $task->save();
+
+        $labelsIds = array_filter($data['labels']);
+
+        $task->labels()->sync($labelsIds);
+
         flash(__('Статус обновлен'))->success();
         return \redirect()->route('tasks.index');
     }

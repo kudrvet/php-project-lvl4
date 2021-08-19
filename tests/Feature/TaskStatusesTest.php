@@ -53,10 +53,6 @@ class TaskStatusesTest extends TestCase
         $response->assertRedirect(route('task_statuses.index'));
         $this->assertDatabaseHas(TaskStatus::class, $data);
 
-        $response = $this
-            ->actingAs($this->user)
-            ->post(route('task_statuses.store'), $data);
-
         $this->assertDatabaseCount(TaskStatus::class, 1);
     }
 

@@ -33,6 +33,9 @@
                 <a class="nav-item m-sm-2" href="{{ route('task_statuses.index')}}">
                     @lang('Статусы')
                 </a>
+                <a class="nav-item m-sm-2" href="{{ route('labels.index')}}">
+                    @lang('Метки')
+                </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

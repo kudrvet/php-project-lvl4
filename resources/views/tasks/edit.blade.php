@@ -5,7 +5,8 @@ use Illuminate\Support\Arr;
  * @var $task \App\Models\Task
  * @var $statusesList array
  * @var $usersList array
- */
+ * @var $labelsList array
+ **/
 ?>
 
 @extends('layouts.app')
@@ -42,7 +43,14 @@ use Illuminate\Support\Arr;
                  @endif
             </div>
             <div class="form-group">
-                {{ Form::submit( __('Создать'), ['class' => 'btn btn-primary'] )}}
+                {{Form::label('labels', __('Метки'))}}
+                {{Form::select('labels[]', $labelsList, selectAttributes : ['class' => 'form-control ', 'multiple'] )}}
+                @if($errors->has('labels'))
+                    <div class="text-danger ">{{ $errors->first('labels') }}</div>
+                @endif
+            </div>
+            <div class="form-group">
+                {{ Form::submit( __('Сохранить'), ['class' => 'btn btn-primary'] )}}
             </div>
             {{ Form::close() }}
 

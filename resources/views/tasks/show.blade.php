@@ -30,7 +30,15 @@ use Illuminate\Support\Arr;
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>{{__('Статус').": {$task->status->name}"}}</li>
                         <li>{{__('Описание').": {$task->description}"}}</li>
-                        <li>{{__('Метки').": * "}}</li>
+                        <li>{{__('Метки').":"}}
+                            <?php if($task->labels()->count()) {?>
+                            <ul>
+                                @foreach($task->labels as $label)
+                                    <li>{{$label->name}} </li>
+                                @endforeach
+                            </ul>
+                            <?php } ?>
+                        </li>
                     </ul>
                 </div>
             </div>

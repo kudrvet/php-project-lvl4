@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\TaskStatusesController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\LabelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +35,4 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 Route::resource('task_statuses', TaskStatusesController::class)->except(['show']);
 Route::resource('tasks', TaskController::class);
+Route::resource('labels', LabelController::class)->except(['show']);

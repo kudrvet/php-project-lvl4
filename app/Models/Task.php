@@ -31,6 +31,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\User|null $creator
  * @property-read \App\Models\User|null $executor
  * @property-read \App\Models\TaskStatus|null $status
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Label[] $labels
+ * @property-read int|null $labels_count
+ * @method static \Database\Factories\TaskFactory factory(...$parameters)
  */
 class Task extends Model
 {
@@ -53,5 +56,10 @@ class Task extends Model
     public function executor()
     {
         return $this->hasOne(User::class, 'id', 'assigned_to_id');
+    }
+
+    public function labels()
+    {
+        return $this->belongsToMany(Label::class, 'task_label');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -15,13 +16,17 @@ class TaskTest extends TestCase
 {
     /** @var $executor User  */
     public $executor ;
+
     /** @var $creator User  */
     public $creator;
+
     /** @var  $status TaskStatus  */
     public $status;
 
-    public $taskData;
+    /** @var $label Label  */
+    public $label;
 
+    public $taskData;
 
 
     public function setUp(): void
@@ -31,12 +36,13 @@ class TaskTest extends TestCase
         $this->executor = User::factory()->create();
 
         $this->status = TaskStatus::factory()->create();
+        $this->label = Label::factory()->create();
         $this->taskData = [
             'name'           => 'test',
             'description'    => 'test description',
             'status_id'      => $this->status->id,
             'assigned_to_id' => $this->executor->id,
-            'created_by_id'  => $this->creator->id
+            'created_by_id'  => $this->creator->id,
         ];
     }
 
@@ -84,20 +90,28 @@ class TaskTest extends TestCase
     public function testStore()
     {
         $this->assertDatabaseCount(Task::class, 0);
+        $this->assertDatabaseCount('task_label', 0);
+        $this->assertDatabaseCount(Label::class, 1);
 
+        $postData = array_merge($this->taskData, ['labels' => [$this->label->id]]);
         $response = $this
             ->actingAs($this->creator)
-            ->post(route('tasks.store'), $this->taskData);
+            ->post(route('tasks.store'), $postData);
 
         $response->assertRedirect(route('tasks.index'));
         $this->assertDatabaseHas(Task::class, $this->taskData);
+        $this->assertDatabaseCount('task_label', 1);
     }
 
     public function testEdit()
     {
         /** @var $task Task */
+
         $task = Task::create($this->taskData);
-        $dataToSee = [$task->name, $task->description, $task->status->name, $task->executor->name];
+        $task->labels()->save($this->label);
+        $task->refresh();
+
+        $dataToSee = [$task->name, $task->description, $task->status->name, $task->executor->name, $this->label->name];
         $response = $this
             ->actingAs($this->creator)
             ->get(route('tasks.edit', [$task->id]));
@@ -114,11 +128,13 @@ class TaskTest extends TestCase
 
         $this->assertDatabaseHas(Task::class, $this->taskData);
 
-        $updatedData = array_merge($this->taskData, ['name' => 'new', 'description' => 'new descr']);
+        $updatedData = ['name' => 'new', 'description' => 'new descr'];
+
+        $postData = array_merge($this->taskData, $updatedData, ['labels' => [$this->label->id]]);
 
         $response = $this
             ->actingAs($this->creator)
-            ->patch(route('tasks.update', [$task->id]), $updatedData);
+            ->patch(route('tasks.update', [$task->id]), $postData);
         $response->assertRedirect(route('tasks.index'));
 
         $this->assertDatabaseCount(Task::class, 1);
