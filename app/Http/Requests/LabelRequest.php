@@ -24,7 +24,7 @@ class LabelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'  => ['required'],
+            'name'  => ['required', 'unique:labels,name'],
         ];
     }
 
@@ -35,6 +35,7 @@ class LabelRequest extends FormRequest
     {
         return [
             'required' => 'Это обязательное поле',
+            'unique'   => 'Метка с таким именем уже существует'
         ];
     }
 }

@@ -35,6 +35,7 @@ class TaskStatusRequest extends FormRequest
     {
         return [
             'required' => 'Это обязательное поле',
+            'unique'   => 'Статус с таким именем уже существует'
         ];
     }
 }
