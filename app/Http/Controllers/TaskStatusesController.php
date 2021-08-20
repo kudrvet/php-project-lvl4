@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TaskStatusesStoreRequest;
+use App\Http\Requests\TaskStatusRequest;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -43,10 +43,10 @@ class TaskStatusesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param TaskStatusesStoreRequest $request
+     * @param TaskStatusRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TaskStatusesStoreRequest $request)
+    public function store(TaskStatusRequest $request)
     {
         TaskStatus::create($request->validated());
         flash(__('Статус успешно создан'))->success();
@@ -66,11 +66,11 @@ class TaskStatusesController extends Controller
     }
 
     /**
-     * @param TaskStatusesStoreRequest $request
+     * @param TaskStatusRequest $request
      * @param TaskStatus $taskStatus
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(TaskStatusesStoreRequest $request, TaskStatus $taskStatus)
+    public function update(TaskStatusRequest $request, TaskStatus $taskStatus)
     {
         $taskStatus->fill($request->validated());
         $taskStatus->save();

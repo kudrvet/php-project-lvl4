@@ -56,15 +56,7 @@ class TaskTest extends TestCase
         $response = $this->get(route('tasks.index'));
         $response
             ->assertStatus(200)
-            ->assertSeeText(
-                [
-                    $task->name,
-                    $task->status->name,
-                    $task->creator->name,
-                    $task->executor->name,
-                    $task->created_at
-                ]
-            );
+            ->assertSeeText(Arr::except($this->taskData, 'description'));
     }
 
     public function testShow()

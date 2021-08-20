@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TaskStatusesStoreRequest extends FormRequest
+class TaskStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,17 @@ class TaskStatusesStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'  => ['unique:task_statuses,name'],
+            'name'  => ['unique:task_statuses,name','required'],
+        ];
+    }
+
+    /**
+     * @inerhitDoc
+     */
+    public function messages(): array
+    {
+        return [
+            'required' => 'Это обязательное поле',
         ];
     }
 }
