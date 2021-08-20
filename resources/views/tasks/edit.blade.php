@@ -50,7 +50,7 @@ use Illuminate\Support\Arr;
                 @endif
             </div>
             <div class="form-group">
-                {{ Form::submit( __('Сохранить'), ['class' => 'btn btn-primary'] )}}
+                {{ Form::submit( __('Обновить'), ['class' => 'btn btn-primary'] )}}
             </div>
             {{ Form::close() }}
 

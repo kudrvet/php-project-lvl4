@@ -27,7 +27,7 @@ use App\Models\Label;
             @endif
         </div>
         <div class="form-group">
-            {{ Form::submit( __('Создать') )}}
+            {{ Form::submit( __('Обновить') )}}
         </div>
         {{ Form::close() }}
 
