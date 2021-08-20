@@ -14,7 +14,6 @@ use App\Models\Task;
 @extends('layouts.app')
 
 @section('content')
-    <main class="container py-4">
         <h1 class="mb-5">@lang('Задачи')</h1>
         <div class="d-flex">
             <div>
@@ -73,5 +72,4 @@ use App\Models\Task;
             @endforeach
             </tbody>
         </table>
-    </main>
 @endsection
