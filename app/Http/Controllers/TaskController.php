@@ -130,10 +130,10 @@ class TaskController extends Controller
         $task->fill($data);
         $task->save();
 
-        $labelsIds = array_filter($data['labels']);
-
-        $task->labels()->sync($labelsIds);
-
+        if (isset($data['labels'])) {
+            $labelsIds = array_filter($data['labels']);
+            $task->labels()->sync($labelsIds);
+        }
         flash(__('Задача успешно изменена'))->success();
         return \redirect()->route('tasks.index');
     }
@@ -145,7 +145,6 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         if (! Gate::allows('destroy-task', $task)) {
-//            abort(403, 'You can delete only own tasks');
             throw new AccessDeniedHttpException('You can delete only own tasks');
         }
         $task->delete();
