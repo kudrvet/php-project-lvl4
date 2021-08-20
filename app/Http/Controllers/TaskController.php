@@ -91,11 +91,13 @@ class TaskController extends Controller
     {
         $data = $request->input() + ['created_by_id' => \Auth::id()];
 
-        $labelsIds = array_filter($data['labels']);
-        $labels = Label::whereIn('id', $labelsIds)->get()->all();
-
         $task = Task::create($data);
-        $task->labels()->saveMany($labels);
+
+        if (isset($data['labels'])) {
+            $labelsIds = array_filter($data['labels']);
+            $labels = Label::whereIn('id', $labelsIds)->get()->all();
+            $task->labels()->saveMany($labels);
+        }
 
         flash(__('Задача успешно создана'))->success();
         return redirect()->route('tasks.index');
