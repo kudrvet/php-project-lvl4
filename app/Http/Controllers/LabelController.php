@@ -69,7 +69,7 @@ class LabelController extends Controller
     {
         $label->fill($request->input());
         $label->save();
-        flash(__('Метка обновлена'))->success();
+        flash(__('Метка успешно изменена'))->success();
         return redirect()->route('labels.index');
     }
 
