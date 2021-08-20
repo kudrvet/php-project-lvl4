@@ -74,7 +74,7 @@ class TaskStatusesController extends Controller
     {
         $taskStatus->fill($request->validated());
         $taskStatus->save();
-        flash(__('Статус обновлен'))->success();
+        flash(__('Статус успешно изменён'))->success();
         return redirect()->route('task_statuses.index');
     }
 
