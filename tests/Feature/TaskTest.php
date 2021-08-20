@@ -6,6 +6,7 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use Faker\Factory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -48,6 +49,11 @@ class TaskTest extends TestCase
 
     public function testIndex()
     {
+//        $status2 = TaskStatus::factory()->create();
+//        $executor2 = User::factory()->create();
+//        $creator2 = User::factory()->create();
+//
+//        $task = Factory::cre
         $this->assertDatabaseCount(Task::class, 0);
         /** @var Task $task */
         $task = Task::create($this->taskData);

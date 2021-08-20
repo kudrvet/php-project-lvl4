@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\AccessCreatedAt;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
 class Label extends Model
 {
     use HasFactory;
+    use AccessCreatedAt;
 
     protected $fillable = ['name', 'description'];
 

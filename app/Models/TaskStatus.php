@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Traits\AccessCreatedAt;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 /**
  * App\Models\TaskStatus
@@ -28,8 +30,7 @@ use Illuminate\Database\Eloquent\Model;
 class TaskStatus extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
+    use AccessCreatedAt;
 
     protected $fillable = ['name', 'created_at', 'updated_at'];
 

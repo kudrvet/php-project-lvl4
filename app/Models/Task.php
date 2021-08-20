@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\AccessCreatedAt;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+    use AccessCreatedAt;
 
     protected $table = 'tasks';
 
@@ -62,4 +65,9 @@ class Task extends Model
     {
         return $this->belongsToMany(Label::class, 'task_label');
     }
+
+//    public function getCreatedAtAttribute($value)
+//    {
+//        return Carbon::createFromFormat('Y-m-d H:m:s', $value)->format('d.m.Y');
+//    }
 }
