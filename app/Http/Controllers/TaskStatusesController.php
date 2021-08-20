@@ -88,7 +88,7 @@ class TaskStatusesController extends Controller
 
         if ($tasksWithThisStatusCount === 0) {
             $taskStatus->delete();
-            flash(__('Статус успешно удален'))->success();
+            flash(__('Статус успешно удалён'))->success();
         } else {
             flash(__('Не удалось удалить статус'))->warning();
         }
