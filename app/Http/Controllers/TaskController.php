@@ -30,7 +30,7 @@ class TaskController extends Controller
 //        $tasks = Task::all();
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters(['status_id','created_by_id','assigned_to_id'])
-//            ->withCasts(['status_id' => 'string','created_by_id' => 'string','assigned_to_id' => 'string'])
+            ->withCasts(['status_id' => 'string','created_by_id' => 'string','assigned_to_id' => 'string'])
             ->orderBy('created_at')
             ->get()
             ->all();
