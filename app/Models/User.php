@@ -39,6 +39,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task[] $createdTasks
+ * @property-read int|null $created_tasks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task[] $toDoTasks
+ * @property-read int|null $to_do_tasks_count
  */
 class User extends Authenticatable
 {

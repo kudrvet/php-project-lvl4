@@ -1,11 +1,14 @@
 <?php
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\TaskStatusesController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\LabelController;
+use Illuminate\Http\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +25,13 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Auth::routes();
 
-Route::get('/email/verify', function () {
+Route::get('/email/verify', function (): Response {
     return response()->view('auth.verify');
 })->name('verification.notice')->middleware('auth');
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request): Redirector | RedirectResponse {
     $request->fulfill();
-    return response()->redirect('/');
+    return redirect('/');
 })->name('verification.verify')->middleware(['auth', 'signed']);
 
 Route::resource('task_statuses', TaskStatusesController::class)->except(['show']);

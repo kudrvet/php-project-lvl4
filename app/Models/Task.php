@@ -36,7 +36,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Task whereStatusId($value)
  * @method static Builder|Task whereUpdatedAt($value)
  * @mixin Eloquent
- * @property-read User|null $creator
+ * @property-read User $creator
  * @property-read User|null $executor
  * @property-read TaskStatus|null $status
  * @property-read Collection|Label[] $labels
