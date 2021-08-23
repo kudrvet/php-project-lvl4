@@ -11,23 +11,26 @@ use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-    /** @var User  */
-    public $creator;
-    /** @var User  */
-    public $executor;
-    /** @var TaskStatus  */
-    public $status;
-    /** @var Label  */
-    public $label;
+
+    public User $creator;
+
+    public User $executor;
+
+    public TaskStatus $status;
+
+    public Label $label;
     public array $taskData;
 
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->creator = User::factory()->createOne();
+        /** @var  $creator User */
+        $creator = User::factory()->createOne();
+        $this->creator = $creator;
         $this->executor = User::factory()->createOne();
-        $this->status = TaskStatus::factory()->createOne();
+        /** @var $status TaskStatus */
+        $status = TaskStatus::factory()->createOne();
+        $this->status = $status;
         $this->label = Label::factory()->createOne();
         $this->taskData = [
             'name'           => 'test',
