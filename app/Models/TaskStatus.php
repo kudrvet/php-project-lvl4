@@ -19,7 +19,6 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @method static TaskStatus|TaskStatus[] factory(...$parameters)
  * @method static Builder|TaskStatus newModelQuery()
  * @method static Builder|TaskStatus newQuery()
  * @method static Builder|TaskStatus query()
@@ -30,6 +29,7 @@ use Illuminate\Support\Carbon;
  * @mixin Eloquent
  * @property-read Collection|Task[] $tasks
  * @property-read int|null $tasks_count
+ * @method static \Database\Factories\TaskStatusFactory factory(...$parameters)
  */
 
 class TaskStatus extends Model

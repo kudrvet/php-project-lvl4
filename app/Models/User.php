@@ -26,7 +26,6 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @method static User|User[] factory(...$parameters)
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
@@ -43,6 +42,7 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $created_tasks_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task[] $toDoTasks
  * @property-read int|null $to_do_tasks_count
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
  */
 class User extends Authenticatable
 {
