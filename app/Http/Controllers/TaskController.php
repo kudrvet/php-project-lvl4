@@ -7,11 +7,11 @@ use App\Models\Task;
 use App\Http\Requests\TaskRequest;
 use App\Models\TaskStatus;
 use App\Models\User;
-use App\Models\WorkerTimesheet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
@@ -27,16 +27,18 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-//        $tasks = Task::all();
         $tasks = QueryBuilder::for(Task::class)
-            ->allowedFilters(['status_id','created_by_id','assigned_to_id'])
-            ->withCasts(['status_id' => 'string','created_by_id' => 'string','assigned_to_id' => 'string'])
+            ->allowedFilters(
+                [
+                    AllowedFilter::exact('status_id'),
+                    AllowedFilter::exact('created_by_id'),
+                    AllowedFilter::exact('assigned_to_id'),
+
+                ]
+            )
             ->orderBy('created_at')
             ->get()
             ->all();
-
-
-//            ->paginate(20);
 
         $filterParams = $request->input('filter');
 
