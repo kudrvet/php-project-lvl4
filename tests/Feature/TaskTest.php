@@ -63,7 +63,7 @@ class TaskTest extends TestCase
             ->assertSeeText($dataToSee);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $this
             ->actingAs($this->creator)
