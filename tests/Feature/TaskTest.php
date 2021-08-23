@@ -24,11 +24,11 @@ class TaskTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        /** @var  $creator User */
+        /** @var   User */
         $creator = User::factory()->createOne();
         $this->creator = $creator;
         $this->executor = User::factory()->createOne();
-        /** @var $status TaskStatus */
+        /** @var  TaskStatus */
         $status = TaskStatus::factory()->createOne();
         $this->status = $status;
         $this->label = Label::factory()->createOne();
