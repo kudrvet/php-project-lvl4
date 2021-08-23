@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\RegisterMail;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
@@ -13,9 +10,9 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function index() : \Illuminate\Contracts\Support\Renderable
+    public function index(): Renderable
     {
         return view('home');
     }
