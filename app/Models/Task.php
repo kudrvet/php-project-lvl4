@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use App\Traits\AccessCreatedAt;
-use Carbon\Carbon;
+use Database\Factories\TaskFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Task
@@ -16,26 +22,26 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status_id
  * @property int $created_by_id
  * @property int|null $assigned_to_id
- * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Support\Carbon $created_at
- * @method static \Illuminate\Database\Eloquent\Builder|Task newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Task newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Task query()
- * @method static \Illuminate\Database\Eloquent\Builder|Task whereAssignedToId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Task whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Task whereCreatedById($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Task whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Task whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Task whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Task whereStatusId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \App\Models\User|null $creator
- * @property-read \App\Models\User|null $executor
- * @property-read \App\Models\TaskStatus|null $status
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Label[] $labels
+ * @property Carbon $updated_at
+ * @property Carbon $created_at
+ * @method static Builder|Task newModelQuery()
+ * @method static Builder|Task newQuery()
+ * @method static Builder|Task query()
+ * @method static Builder|Task whereAssignedToId($value)
+ * @method static Builder|Task whereCreatedAt($value)
+ * @method static Builder|Task whereCreatedById($value)
+ * @method static Builder|Task whereDescription($value)
+ * @method static Builder|Task whereId($value)
+ * @method static Builder|Task whereName($value)
+ * @method static Builder|Task whereStatusId($value)
+ * @method static Builder|Task whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @property-read User|null $creator
+ * @property-read User|null $executor
+ * @property-read TaskStatus|null $status
+ * @property-read Collection|Label[] $labels
  * @property-read int|null $labels_count
- * @method static \Database\Factories\TaskFactory factory(...$parameters)
+ * @method static TaskFactory factory(...$parameters)
  */
 class Task extends Model
 {
@@ -46,22 +52,34 @@ class Task extends Model
 
     protected $fillable = ['name', 'description', 'status_id', 'assigned_to_id', 'created_by_id', 'updated_at', 'created_at'];
 
-    public function status()
+    /**
+     * @return HasOne
+     */
+    public function status(): HasOne
     {
         return $this->hasOne(TaskStatus::class, 'id', 'status_id');
     }
 
-    public function creator()
+    /**
+     * @return HasOne
+     */
+    public function creator(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
-    public function executor()
+    /**
+     * @return HasOne
+     */
+    public function executor(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'assigned_to_id');
     }
 
-    public function labels()
+    /**
+     * @return BelongsToMany
+     */
+    public function labels(): BelongsToMany
     {
         return $this->belongsToMany(Label::class, 'task_label');
     }

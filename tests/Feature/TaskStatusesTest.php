@@ -9,8 +9,7 @@ use Tests\TestCase;
 
 class TaskStatusesTest extends TestCase
 {
-    /** @var $user User  */
-    public $user ;
+    public User $user ;
 
     public function setUp(): void
     {
@@ -58,7 +57,7 @@ class TaskStatusesTest extends TestCase
 
     public function testEdit()
     {
-        /** @var $status TaskStatus */
+        /** @var TaskStatus */
         $status = TaskStatus::factory()->create();
         $this
             ->actingAs($this->user)
@@ -68,7 +67,7 @@ class TaskStatusesTest extends TestCase
 
     public function testUpdate()
     {
-        /** @var $status TaskStatus */
+        /** @var TaskStatus */
         $status = TaskStatus::factory()->create();
         $updatedData = ['name' => 'updated'];
         $response = $this
@@ -82,7 +81,7 @@ class TaskStatusesTest extends TestCase
 
     public function testDestroy()
     {
-        /** @var $status TaskStatus */
+        /** @var TaskStatus */
         $status = TaskStatus::factory()->create();
         $this->assertDatabaseCount(TaskStatus::class, 1);
 
@@ -95,7 +94,7 @@ class TaskStatusesTest extends TestCase
 
     public function testDestroyWithExistedTask()
     {
-        /** @var $status TaskStatus */
+        /** @var TaskStatus */
         $status = TaskStatus::factory()->create();
         $this->assertDatabaseCount(TaskStatus::class, 1);
 
@@ -106,7 +105,7 @@ class TaskStatusesTest extends TestCase
             'created_by_id'  => $this->user->id
         ];
 
-        /** @var $task Task */
+        /** @var Task */
         $task = Task::create($taskData);
 
 

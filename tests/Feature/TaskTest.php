@@ -6,29 +6,16 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
-use Faker\Factory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Tests\TestCase;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class TaskTest extends TestCase
 {
-    /** @var $executor User  */
-    public $executor ;
-
-    /** @var $creator User  */
-    public $creator;
-
-    /** @var  $status TaskStatus  */
-    public $status;
-
-    /** @var $label Label  */
-    public $label;
-
-    public $taskData;
-
+    public User $creator;
+    public User $executor;
+    public TaskStatus $status;
+    public Label $label;
+    public array $taskData;
 
     public function setUp(): void
     {
@@ -55,7 +42,7 @@ class TaskTest extends TestCase
 //
 //        $task1 = Task::factory([''])
         $this->assertDatabaseCount(Task::class, 0);
-        /** @var Task $task */
+        /** @var Task */
         $task = Task::create($this->taskData);
 
         $this->assertDatabaseCount(Task::class, 1);
@@ -103,8 +90,7 @@ class TaskTest extends TestCase
 
     public function testEdit()
     {
-        /** @var $task Task */
-
+        /** @var Task */
         $task = Task::create($this->taskData);
         $task->labels()->save($this->label);
         $task->refresh();
@@ -143,7 +129,7 @@ class TaskTest extends TestCase
     {
         $this->assertDatabaseCount(Task::class, 0);
 
-        /** @var $task Task */
+        /** @var Task */
         $task = Task::create($this->taskData);
 
         $response = $this
@@ -158,7 +144,7 @@ class TaskTest extends TestCase
     {
         $this->assertDatabaseCount(Task::class, 0);
 
-        /** @var $task Task */
+        /** @var Task */
         $task = Task::create($this->taskData);
 
         $response = $this

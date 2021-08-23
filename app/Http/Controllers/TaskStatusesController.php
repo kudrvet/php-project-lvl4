@@ -22,7 +22,7 @@ class TaskStatusesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         $taskStatuses = TaskStatus::paginate(15);
         return  \response()->view('task_statuses.index', compact('taskStatuses'));
@@ -33,7 +33,7 @@ class TaskStatusesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         $taskStatus = new TaskStatus();
         return response()
@@ -44,9 +44,9 @@ class TaskStatusesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param TaskStatusRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(TaskStatusRequest $request)
+    public function store(TaskStatusRequest $request): \Illuminate\Http\RedirectResponse
     {
         TaskStatus::create($request->validated());
         flash(__('Статус успешно создан'))->success();
@@ -60,7 +60,7 @@ class TaskStatusesController extends Controller
      * @param  \App\Models\TaskStatus  $taskStatus
      * @return \Illuminate\Http\Response
      */
-    public function edit(TaskStatus $taskStatus)
+    public function edit(TaskStatus $taskStatus): \Illuminate\Http\Response
     {
         return \response()->view('task_statuses.edit', compact('taskStatus'));
     }
@@ -82,7 +82,7 @@ class TaskStatusesController extends Controller
      * @param TaskStatus $taskStatus
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(TaskStatus $taskStatus)
+    public function destroy(TaskStatus $taskStatus): \Illuminate\Http\RedirectResponse
     {
         $tasksWithThisStatusCount = $taskStatus->tasks()->count();
 

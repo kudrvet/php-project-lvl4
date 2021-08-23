@@ -30,7 +30,7 @@ class LoginController extends Controller
     }
 
 
-    protected function sendFailedLoginResponse(Request $request)
+    protected function sendFailedLoginResponse(Request $request) : void
     {
         throw ValidationException::withMessages(
             [

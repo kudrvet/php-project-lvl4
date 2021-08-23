@@ -6,9 +6,13 @@ use Carbon\Carbon;
 
 trait AccessCreatedAt
 {
-    protected $newDateFormat = 'd.m.Y';
+    protected string $newDateFormat = 'd.m.Y';
 
-    public function getCreatedAtAttribute($value)
+    /**
+     * @param mixed $value
+     * @return string
+     */
+    public function getCreatedAtAttribute(mixed $value): string
     {
         return Carbon::parse($value)->format($this->newDateFormat);
     }

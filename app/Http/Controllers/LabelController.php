@@ -17,7 +17,7 @@ class LabelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         $labels = Label::paginate(15);
         return  response()->view('labels.index', compact('labels'));
@@ -28,7 +28,7 @@ class LabelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         $label = new Label();
         return response()
@@ -37,11 +37,10 @@ class LabelController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param LabelRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(LabelRequest $request)
+    public function store(LabelRequest $request): \Illuminate\Http\RedirectResponse
     {
         Label::create($request->input());
         flash(__('Метка успешно создана'))->success();
@@ -55,7 +54,7 @@ class LabelController extends Controller
      * @param  \App\Models\Label  $label
      * @return \Illuminate\Http\Response
      */
-    public function edit(Label $label)
+    public function edit(Label $label): \Illuminate\Http\Response
     {
         return \response()->view('labels.edit', compact('label'));
     }
@@ -65,7 +64,7 @@ class LabelController extends Controller
      * @param Label $label
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(LabelRequest $request, Label $label)
+    public function update(LabelRequest $request, Label $label): \Illuminate\Http\RedirectResponse
     {
         $label->fill($request->input());
         $label->save();
@@ -77,7 +76,7 @@ class LabelController extends Controller
      * @param Label $label
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Label $label)
+    public function destroy(Label $label): \Illuminate\Http\RedirectResponse
     {
         $tasksWithThisLabelCount = $label->tasks()->count();
 

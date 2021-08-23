@@ -25,7 +25,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Http\Response
     {
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters(
@@ -67,7 +67,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
+    public function show(Task $task): \Illuminate\Http\Response
     {
         return response()->view('tasks.show', compact('task'));
     }
@@ -77,7 +77,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Http\Response
     {
         $task = new Task();
         $statusesList = ['' => 'Выберите статус'] + TaskStatus::pluck('name', 'id')->all();
@@ -92,9 +92,9 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(TaskRequest $request)
+    public function store(TaskRequest $request): \Illuminate\Http\RedirectResponse
     {
         $data = $request->input() + ['created_by_id' => \Auth::id()];
 
@@ -117,7 +117,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit(Task $task): \Illuminate\Http\Response
     {
         $statusesList = ['' => 'Выберите статус'] + TaskStatus::pluck('name', 'id')->all();
         $usersList = ['' => 'Выберите исполнителя'] + User::pluck('name', 'id')->all();
@@ -131,7 +131,7 @@ class TaskController extends Controller
      * @param Task $task
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(TaskRequest $request, Task $task)
+    public function update(TaskRequest $request, Task $task): \Illuminate\Http\RedirectResponse
     {
         $data = $request->input();
         $task->fill($data);
@@ -149,7 +149,7 @@ class TaskController extends Controller
      * @param Task $task
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Task $task)
+    public function destroy(Task $task): \Illuminate\Http\RedirectResponse
     {
         if (! Gate::allows('destroy-task', $task)) {
             throw new AccessDeniedHttpException('You can delete only own tasks');

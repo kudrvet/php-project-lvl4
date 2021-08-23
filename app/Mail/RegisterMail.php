@@ -27,9 +27,10 @@ class RegisterMail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): RegisterMail
     {
-        $this->from('TaskManagerLocal@mail.ru')
-             ->view('mail.register');
+        return $this
+           ->from('TaskManagerLocal@mail.ru')
+           ->view('mail.register');
     }
 }

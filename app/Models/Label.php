@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\AccessCreatedAt;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Label
@@ -33,7 +34,10 @@ class Label extends Model
 
     protected $fillable = ['name', 'description'];
 
-    public function tasks()
+    /**
+     * @return BelongsToMany
+     */
+    public function tasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class, 'task_label');
     }
