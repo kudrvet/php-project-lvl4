@@ -16,9 +16,9 @@ class TaskTest extends TestCase
     /** @var User  */
     public $executor;
     /** @var TaskStatus  */
-    public  $status;
+    public $status;
     /** @var Label  */
-    public  $label;
+    public $label;
     public array $taskData;
 
     public function setUp(): void
