@@ -24,7 +24,7 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'  => ['required'],
+            'name'  => ['required', 'unique:tasks,name'],
             'status_id' => ['required'],
         ];
     }
@@ -36,6 +36,7 @@ class TaskRequest extends FormRequest
     {
         return [
             'required' => 'Это обязательное поле',
+            'unique'   => 'Задача с таким именем уже существует'
         ];
     }
 }
