@@ -68,7 +68,7 @@ class LabelTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         /** @var Label */
         $status = Label::factory()->create();
@@ -82,7 +82,7 @@ class LabelTest extends TestCase
         $this->assertDatabaseHas(Label::class, $updatedData);
     }
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         /** @var  Label */
         $label = Label::factory()->create();
@@ -95,7 +95,7 @@ class LabelTest extends TestCase
         $this->assertDatabaseCount(Label::class, 0);
     }
 
-    public function testDestroyWithExistedTask()
+    public function testDestroyWithExistedTask(): void
     {
         /** @var Label */
         $label = Label::factory()->create();

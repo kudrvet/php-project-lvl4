@@ -17,7 +17,7 @@ class TaskStatusesTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->assertDatabaseCount(TaskStatus::class, 0);
 
@@ -33,7 +33,7 @@ class TaskStatusesTest extends TestCase
         $this->assertDatabaseCount(TaskStatus::class, 5);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
 
         $this->actingAs($this->user)->get(route('task_statuses.create'))
@@ -41,7 +41,7 @@ class TaskStatusesTest extends TestCase
     }
 
 
-    public function testStore()
+    public function testStore(): void
     {
         $this->assertDatabaseCount(TaskStatus::class, 0);
         $data = ['name' => 'new'];
@@ -55,7 +55,7 @@ class TaskStatusesTest extends TestCase
         $this->assertDatabaseCount(TaskStatus::class, 1);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         /** @var TaskStatus */
         $status = TaskStatus::factory()->create();
@@ -65,7 +65,7 @@ class TaskStatusesTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         /** @var TaskStatus */
         $status = TaskStatus::factory()->create();
@@ -79,7 +79,7 @@ class TaskStatusesTest extends TestCase
         $this->assertDatabaseHas(TaskStatus::class, $updatedData);
     }
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         /** @var TaskStatus */
         $status = TaskStatus::factory()->create();
@@ -92,7 +92,7 @@ class TaskStatusesTest extends TestCase
         $this->assertDatabaseCount(TaskStatus::class, 0);
     }
 
-    public function testDestroyWithExistedTask()
+    public function testDestroyWithExistedTask(): void
     {
         /** @var TaskStatus */
         $status = TaskStatus::factory()->create();

@@ -23,12 +23,12 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Auth::routes();
 
 Route::get('/email/verify', function () {
-    return view('auth.verify');
+    return response()->view('auth.verify');
 })->name('verification.notice')->middleware('auth');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect('/');
+    return response()->redirect('/');
 })->name('verification.verify')->middleware(['auth', 'signed']);
 
 Route::resource('task_statuses', TaskStatusesController::class)->except(['show']);

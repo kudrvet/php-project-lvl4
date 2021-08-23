@@ -34,7 +34,7 @@ class TaskTest extends TestCase
         ];
     }
 
-    public function testIndex()
+    public function testIndex(): void
     {
 //        $status2 = TaskStatus::factory()->create();
 //        $executor2 = User::factory()->create();
@@ -52,11 +52,11 @@ class TaskTest extends TestCase
             ->assertSeeText(Arr::except($this->taskData, 'description'));
     }
 
-    public function testShow()
+    public function testShow(): void
     {
         $task = Task::create($this->taskData);
 
-        $dataToSee = [$task->name, $task->description, $task->status->name];
+        $dataToSee = [$task->name, $task->description, optional($task)->status->name];
         $response = $this->get(route('tasks.show', [$task->id]));
         $response
             ->assertStatus(200)
@@ -72,7 +72,7 @@ class TaskTest extends TestCase
     }
 
 
-    public function testStore()
+    public function testStore(): void
     {
         $this->assertDatabaseCount(Task::class, 0);
         $this->assertDatabaseCount('task_label', 0);
@@ -88,14 +88,14 @@ class TaskTest extends TestCase
         $this->assertDatabaseCount('task_label', 1);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         /** @var Task */
         $task = Task::create($this->taskData);
         $task->labels()->save($this->label);
         $task->refresh();
 
-        $dataToSee = [$task->name, $task->description, $task->status->name, $task->executor->name, $this->label->name];
+        $dataToSee = [$task->name, $task->description, optional($task)->status->name, optional($task)->executor->name, $this->label->name];
         $response = $this
             ->actingAs($this->creator)
             ->get(route('tasks.edit', [$task->id]));
@@ -104,7 +104,7 @@ class TaskTest extends TestCase
             ->assertSee($dataToSee);
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $this->assertDatabaseCount(Task::class, 0);
 
@@ -125,7 +125,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas(Task::class, $updatedData);
     }
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         $this->assertDatabaseCount(Task::class, 0);
 
@@ -140,7 +140,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseCount(Task::class, 0);
     }
 
-    public function testDestroyForeignTask()
+    public function testDestroyForeignTask(): void
     {
         $this->assertDatabaseCount(Task::class, 0);
 

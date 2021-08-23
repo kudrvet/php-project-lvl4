@@ -7,11 +7,17 @@ use App\Models\Task;
 use App\Http\Requests\TaskRequest;
 use App\Models\TaskStatus;
 use App\Models\User;
+use Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Spatie\QueryBuilder\AllowedFilter;
+
+use function redirect;
+use function response;
 
 class TaskController extends Controller
 {
@@ -20,12 +26,14 @@ class TaskController extends Controller
     {
         $this->middleware('auth')->only(['create', 'update', 'store','edit','destroy']);
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
-    public function index(Request $request): \Illuminate\Http\Response
+    public function index(Request $request): Response
     {
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters(
@@ -65,9 +73,10 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Task $task
+     * @return Response
      */
-    public function show(Task $task): \Illuminate\Http\Response
+    public function show(Task $task): Response
     {
         return response()->view('tasks.show', compact('task'));
     }
@@ -75,9 +84,9 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create(): \Illuminate\Http\Response
+    public function create(): Response
     {
         $task = new Task();
         $statusesList = ['' => 'Выберите статус'] + TaskStatus::pluck('name', 'id')->all();
@@ -91,12 +100,12 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  TaskRequest  $request
+     * @return RedirectResponse
      */
-    public function store(TaskRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(TaskRequest $request): RedirectResponse
     {
-        $data = $request->input() + ['created_by_id' => \Auth::id()];
+        $data = $request->input() + ['created_by_id' => Auth::id()];
 
         $task = Task::create($data);
 
@@ -114,24 +123,24 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @param  Task  $task
+     * @return Response
      */
-    public function edit(Task $task): \Illuminate\Http\Response
+    public function edit(Task $task): Response
     {
         $statusesList = ['' => 'Выберите статус'] + TaskStatus::pluck('name', 'id')->all();
         $usersList = ['' => 'Выберите исполнителя'] + User::pluck('name', 'id')->all();
         $labelsList = ['' => 'Добавьте метки'] + Label::pluck('name', 'id')->all();
 
-        return \response()->view('tasks.edit', compact('task', 'statusesList', 'usersList', 'labelsList'));
+        return response()->view('tasks.edit', compact('task', 'statusesList', 'usersList', 'labelsList'));
     }
 
     /**
      * @param TaskRequest $request
      * @param Task $task
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(TaskRequest $request, Task $task): \Illuminate\Http\RedirectResponse
+    public function update(TaskRequest $request, Task $task): RedirectResponse
     {
         $data = $request->input();
         $task->fill($data);
@@ -142,20 +151,20 @@ class TaskController extends Controller
             $task->labels()->sync($labelsIds);
         }
         flash(__('Задача успешно изменена'))->success();
-        return \redirect()->route('tasks.index');
+        return redirect()->route('tasks.index');
     }
 
     /**
      * @param Task $task
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function destroy(Task $task): \Illuminate\Http\RedirectResponse
+    public function destroy(Task $task): RedirectResponse
     {
         if (! Gate::allows('destroy-task', $task)) {
             throw new AccessDeniedHttpException('You can delete only own tasks');
         }
         $task->delete();
         flash(__('Задача успешно удалена'))->success();
-        return \redirect()->route('tasks.index');
+        return redirect()->route('tasks.index');
     }
 }
