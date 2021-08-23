@@ -116,8 +116,5 @@ class TaskStatusesTest extends TestCase
         $this->assertDatabaseCount(TaskStatus::class, 1);
 
         $response->assertStatus(302);
-
-        $expectedFlash = __('Не удалось удалить статус');
-        $this->followRedirects($response)->assertSeeText($expectedFlash);
     }
 }

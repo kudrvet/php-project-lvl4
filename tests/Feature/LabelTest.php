@@ -120,8 +120,5 @@ class LabelTest extends TestCase
         $this->assertDatabaseCount(Label::class, 1);
 
         $response->assertStatus(302);
-
-        $expectedFlash = __('Не удалось удалить метку');
-        $this->followRedirects($response)->assertSeeText($expectedFlash);
     }
 }

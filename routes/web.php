@@ -29,7 +29,7 @@ Route::get('/email/verify', function (): Response {
     return response()->view('auth.verify');
 })->name('verification.notice')->middleware('auth');
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request): Redirector | RedirectResponse {
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request): RedirectResponse {
     $request->fulfill();
     return redirect('/');
 })->name('verification.verify')->middleware(['auth', 'signed']);
