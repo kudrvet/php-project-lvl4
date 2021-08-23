@@ -11,10 +11,14 @@ use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-    public User $creator;
-    public User $executor;
-    public TaskStatus $status;
-    public Label $label;
+    /** @var User  */
+    public $creator;
+    /** @var User  */
+    public $executor;
+    /** @var TaskStatus  */
+    public  $status;
+    /** @var Label  */
+    public  $label;
     public array $taskData;
 
     public function setUp(): void
