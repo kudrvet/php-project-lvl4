@@ -8,7 +8,7 @@
                 <div class="card-header">@lang('Вход')</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ secure_url(route('login')) }}">
                         @csrf
 
                         <div class="form-group row">
