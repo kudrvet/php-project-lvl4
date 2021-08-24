@@ -147,6 +147,7 @@ class TaskController extends Controller
         $task->save();
 
         if (isset($data['labels'])) {
+            /** @var array */
             $labelsIds = array_filter($data['labels']);
             $task->labels()->sync($labelsIds);
         }
